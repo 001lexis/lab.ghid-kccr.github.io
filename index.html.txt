@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GIDD | Global Infectious Disease Dynamics Unit</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700&family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ==================
+         Navigation Bar (Simplified)
+         ================== -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="#" class="nav-logo">GIDD Unit</a>
+            <ul class="nav-menu">
+                <li><a href="#">About</a></li>
+                <li><a href="#">Research</a></li>
+                <li><a href="#">Publications</a></li>
+                <li><a href="#">Team</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <!-- ==================
+             Hero Section
+             ================== -->
+        <section class="hero-section">
+            <div class="container">
+                <h1>Mapping Disease Dynamics, Driving Public Health Policy.</h1>
+                <p class="subheadline">Our lab integrates seroepidemiology, biomarker analysis, and data science to provide actionable insights for global health emergencies and disease prevention.</p>
+                <div class="cta-buttons">
+                    <a href="#" class="btn btn-primary">Collaborate With Us</a>
+                    <a href="#" class="btn btn-secondary">Explore Our Research</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================
+             Trust Signals Bar
+             ================== -->
+        <section class="trust-signals">
+            <div class="container">
+                <h6>Trusted by Global Health Leaders</h6>
+                <div class="logos">
+                    <span>WHO</span>
+                    <span>NIH</span>
+                    <span>Wellcome Trust</span>
+                    <span>Gavi</span>
+                    <span>University Partner</span>
+                </div>
+                 <div class="metrics">
+                    <div class="metric-item">
+                        <span class="number">150+</span>
+                        <span class="label">Publications</span>
+                    </div>
+                     <div class="metric-item">
+                        <span class="number">30+</span>
+                        <span class="label">Countries</span>
+                    </div>
+                     <div class="metric-item">
+                        <span class="number">500k+</span>
+                        <span class="label">Samples Analyzed</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================
+             Research Highlights
+             ================== -->
+        <section class="research-highlights">
+            <div class="container">
+                <h2>Our Interdisciplinary Approach</h2>
+                <p>We bridge the gap between fieldwork, laboratory science, and computational analysis.</p>
+                <div class="grid-3">
+                    <div class="card">
+                        <h3>Sero-surveillance & Epidemiology</h3>
+                        <p>We design and deploy large-scale studies to measure population immunity and track disease transmission.</p>
+                        <a href="#">Learn More &rarr;</a>
+                    </div>
+                    <div class="card">
+                        <h3>Advanced Biomarker Analysis</h3>
+                        <p>We identify and validate novel biomarkers to predict disease severity, vaccine response, and infection history.</p>
+                        <a href="#">Learn More &rarr;</a>
+                    </div>
+                    <div class="card">
+                        <h3>Data Science & Modeling</h3>
+                        <p>We develop predictive models and data visualization tools to inform public health strategy and resource allocation.</p>
+                        <a href="#">Learn More &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================
+             Impact Section
+             ================== -->
+        <section class="impact-section">
+            <div class="container split-layout">
+                <div class="impact-text">
+                    <h2>Translating Research into Real-World Protection</h2>
+                    <p>Our work doesn't end in the lab. We partner with ministries of health and global organizations to translate our findings into tangible policy, outbreak response protocols, and stronger health systems. From pandemic preparedness to routine disease surveillance, our goal is saving lives.</p>
+                </div>
+                <div class="impact-visual">
+                    <!-- This would be an impactful image -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================
+             Opportunities Section
+             ================== -->
+        <section class="opportunities-section">
+            <div class="container">
+                <h2>Join Our Team. Shape the Future of Global Health.</h2>
+                <div class="grid-3">
+                    <div class="card opportunity-card">
+                        <h3>Graduate Students</h3>
+                        <p>Seeking PhD candidates in immunology and epidemiology.</p>
+                        <a href="#" class="btn btn-tertiary">View Openings</a>
+                    </div>
+                    <div class="card opportunity-card">
+                        <h3>Postdoctoral Fellows</h3>
+                        <p>Openings for computational biologists and lab scientists.</p>
+                        <a href="#" class="btn btn-tertiary">Learn More</a>
+                    </div>
+                    <div class="card opportunity-card">
+                        <h3>Collaborators</h3>
+                        <p>We are actively seeking partners for new research frontiers.</p>
+                        <a href="#" class="btn btn-tertiary">Propose a Project</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ==================
+         Final CTA & Footer
+         ================== -->
+    <footer class="footer">
+        <div class="container">
+             <h2>Have a question or a project in mind?</h2>
+             <p>Let's connect. We are always open to new ideas and partnerships.</p>
+             <a href="#" class="btn btn-primary">Get In Touch</a>
+             <div class="footer-bottom">
+                <p>&copy; 2024 Global Infectious Disease Dynamics Unit. All rights reserved.</p>
+             </div>
+        </div>
+    </footer>
+
+</body>
+</html>
