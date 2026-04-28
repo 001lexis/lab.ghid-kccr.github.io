@@ -1,159 +1,1060 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GHID | Global Health and Infectious Diseases Research Group</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700&family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GIDD Unit | Global Infectious Disease Dynamics</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400&display=swap" rel="stylesheet" />
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+ 
+    :root {
+      --ink:       #0d1117;
+      --deep:      #111827;
+      --slate:     #1e293b;
+      --muted:     #64748b;
+      --line:      rgba(255,255,255,0.08);
+      --surface:   rgba(255,255,255,0.04);
+      --white:     #f8fafc;
+      --accent:    #22c55e;       /* vivid bio-green */
+      --accent2:   #0ea5e9;       /* science blue */
+      --gold:      #f59e0b;
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body:    'DM Sans', sans-serif;
+      --font-mono:    'DM Mono', monospace;
+      --radius:    12px;
+      --transition: 0.35s cubic-bezier(0.4,0,0.2,1);
+    }
+ 
+    body {
+      background: var(--ink);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 17px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+ 
+    img { display: block; width: 100%; }
+    a { color: inherit; text-decoration: none; }
+ 
+    .container {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+ 
+    /* ===== NOISE OVERLAY ===== */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 999;
+      opacity: 0.022;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 200px;
+    }
+ 
+    /* ===== NAVBAR ===== */
+    .navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.1rem 0;
+      transition: background var(--transition), backdrop-filter var(--transition), border-color var(--transition);
+      border-bottom: 1px solid transparent;
+    }
+    .navbar.scrolled {
+      background: rgba(13,17,23,0.85);
+      backdrop-filter: blur(18px);
+      border-color: var(--line);
+    }
+    .navbar .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: var(--font-mono);
+      font-size: 1rem;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      font-weight: 400;
+    }
+    .nav-logo span { color: var(--white); }
+    .nav-menu {
+      display: flex;
+      list-style: none;
+      gap: 2.2rem;
+      align-items: center;
+    }
+    .nav-menu a {
+      font-size: 0.88rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: rgba(248,250,252,0.7);
+      transition: color var(--transition);
+      text-transform: uppercase;
+    }
+    .nav-menu a:hover { color: var(--accent); }
+    .nav-cta {
+      background: var(--accent);
+      color: var(--ink) !important;
+      padding: 0.45rem 1.2rem;
+      border-radius: 100px;
+      font-weight: 600 !important;
+      transition: background var(--transition), transform var(--transition) !important;
+    }
+    .nav-cta:hover { background: #16a34a; transform: scale(1.04); }
+ 
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      position: relative;
+      overflow: hidden;
+      padding: 7rem 0 4rem;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 60% 40%, rgba(34,197,94,0.12) 0%, transparent 65%),
+        radial-gradient(ellipse 50% 50% at 10% 80%, rgba(14,165,233,0.1) 0%, transparent 60%),
+        var(--ink);
+    }
+    .hero-img-wrap {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      opacity: 0.13;
+    }
+    .hero-img-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center;
+      filter: grayscale(100%) contrast(1.2);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 860px;
+      text-align: center;
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.8rem;
+      padding: 0.4rem 1rem;
+      border: 1px solid rgba(34,197,94,0.35);
+      border-radius: 100px;
+      background: rgba(34,197,94,0.06);
+      animation: fadeUp 0.8s ease both;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.7); }
+    }
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.6rem, 6vw, 5.2rem);
+      font-weight: 900;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.6rem;
+      animation: fadeUp 0.8s 0.15s ease both;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+    .hero-sub {
+      font-size: 1.12rem;
+      color: rgba(248,250,252,0.65);
+      max-width: 640px;
+      margin: 0 auto 2.8rem;
+      font-weight: 300;
+      animation: fadeUp 0.8s 0.3s ease both;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeUp 0.8s 0.45s ease both;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.85rem 2rem;
+      border-radius: 100px;
+      font-weight: 600;
+      font-size: 0.92rem;
+      cursor: pointer;
+      transition: all var(--transition);
+      letter-spacing: 0.01em;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: var(--ink);
+    }
+    .btn-primary:hover { background: #16a34a; transform: translateY(-2px); box-shadow: 0 12px 40px rgba(34,197,94,0.35); }
+    .btn-outline {
+      background: transparent;
+      color: var(--white);
+      border: 1px solid rgba(248,250,252,0.3);
+    }
+    .btn-outline:hover { border-color: var(--white); background: rgba(248,250,252,0.06); transform: translateY(-2px); }
+ 
+    .scroll-hint {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(248,250,252,0.35);
+      animation: fadeUp 1s 1s ease both;
+    }
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, rgba(248,250,252,0.4), transparent);
+      animation: scrollDrop 1.8s ease infinite;
+    }
+    @keyframes scrollDrop {
+      0% { transform: scaleY(0); transform-origin: top; }
+      50% { transform: scaleY(1); transform-origin: top; }
+      51% { transform: scaleY(1); transform-origin: bottom; }
+      100% { transform: scaleY(0); transform-origin: bottom; }
+    }
+ 
+    /* ===== TRUST BAR ===== */
+    .trust-bar {
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding: 2rem 0;
+      background: var(--surface);
+    }
+    .trust-bar .container {
+      display: flex;
+      flex-direction: column;
+      gap: 1.8rem;
+      align-items: center;
+    }
+    .trust-label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .trust-logos {
+      display: flex;
+      gap: 3rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+    }
+    .trust-logos span {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      color: rgba(248,250,252,0.4);
+      transition: color var(--transition);
+    }
+    .trust-logos span:hover { color: var(--white); }
+    .trust-metrics {
+      display: flex;
+      gap: 4rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .metric {
+      text-align: center;
+    }
+    .metric-num {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .metric-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      margin-top: 0.25rem;
+    }
+ 
+    /* ===== SECTION HEADINGS ===== */
+    .section-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    section h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+ 
+    /* ===== RESEARCH SECTION ===== */
+    .research {
+      padding: 8rem 0;
+    }
+    .research-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: end;
+      margin-bottom: 4rem;
+    }
+    .research-header p {
+      color: rgba(248,250,252,0.6);
+      font-size: 1.05rem;
+      font-weight: 300;
+    }
+    .research-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .research-card {
+      background: var(--surface);
+      padding: 2.5rem;
+      position: relative;
+      transition: background var(--transition);
+      overflow: hidden;
+    }
+    .research-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform var(--transition);
+    }
+    .research-card:hover { background: rgba(255,255,255,0.07); }
+    .research-card:hover::before { transform: scaleX(1); }
+    .card-icon {
+      width: 48px; height: 48px;
+      border-radius: 10px;
+      background: rgba(34,197,94,0.1);
+      border: 1px solid rgba(34,197,94,0.2);
+      display: grid;
+      place-items: center;
+      margin-bottom: 1.8rem;
+      font-size: 1.4rem;
+    }
+    .research-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.9rem;
+      line-height: 1.2;
+    }
+    .research-card p {
+      color: rgba(248,250,252,0.55);
+      font-size: 0.92rem;
+      line-height: 1.65;
+      margin-bottom: 1.5rem;
+    }
+    .card-link {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: gap var(--transition);
+    }
+    .card-link:hover { gap: 0.8rem; }
+ 
+    /* ===== IMPACT SECTION ===== */
+    .impact {
+      padding: 8rem 0;
+      background: linear-gradient(180deg, var(--ink) 0%, var(--deep) 100%);
+    }
+    .impact-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+    .impact-text .section-eyebrow { margin-bottom: 1rem; }
+    .impact-text h2 { margin-bottom: 1.5rem; }
+    .impact-text p {
+      color: rgba(248,250,252,0.6);
+      font-weight: 300;
+      line-height: 1.8;
+      margin-bottom: 1.8rem;
+    }
+    .impact-features {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+    .impact-feat {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      font-size: 0.92rem;
+      color: rgba(248,250,252,0.75);
+    }
+    .feat-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+    .impact-visual {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      aspect-ratio: 4/5;
+      box-shadow: 0 40px 100px rgba(0,0,0,0.6);
+    }
+    .impact-visual img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+    .impact-visual:hover img { transform: scale(1.03); }
+    .impact-badge {
+      position: absolute;
+      bottom: 1.5rem; left: 1.5rem;
+      background: rgba(13,17,23,0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 1rem 1.4rem;
+    }
+    .impact-badge strong {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      color: var(--accent);
+      display: block;
+      line-height: 1;
+    }
+    .impact-badge span {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+ 
+    /* ===== PUBLICATION TEASER ===== */
+    .publications {
+      padding: 8rem 0;
+    }
+    .pub-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 3rem;
+    }
+    .pub-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .pub-item {
+      display: grid;
+      grid-template-columns: 80px 1fr auto;
+      gap: 2rem;
+      align-items: center;
+      padding: 1.8rem 0;
+      border-bottom: 1px solid var(--line);
+      transition: background var(--transition);
+      cursor: pointer;
+    }
+    .pub-item:hover { background: var(--surface); margin: 0 -2rem; padding: 1.8rem 2rem; border-radius: 8px; border-color: transparent; }
+    .pub-year {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    .pub-title {
+      font-weight: 500;
+      font-size: 0.97rem;
+      line-height: 1.4;
+    }
+    .pub-journal {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--accent2);
+      margin-top: 0.25rem;
+      font-style: italic;
+    }
+    .pub-arrow {
+      color: var(--muted);
+      font-size: 1.1rem;
+      transition: transform var(--transition), color var(--transition);
+    }
+    .pub-item:hover .pub-arrow { transform: translateX(4px); color: var(--accent); }
+ 
+    /* ===== TEAM SECTION ===== */
+    .team {
+      padding: 8rem 0;
+      background: var(--deep);
+    }
+    .team-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+    .team-header p {
+      color: rgba(248,250,252,0.55);
+      max-width: 520px;
+      margin: 1rem auto 0;
+      font-weight: 300;
+    }
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+    .team-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: transform var(--transition), border-color var(--transition);
+    }
+    .team-card:hover { transform: translateY(-6px); border-color: rgba(34,197,94,0.3); }
+    .team-photo {
+      aspect-ratio: 1;
+      overflow: hidden;
+      background: var(--slate);
+    }
+    .team-photo img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: grayscale(20%);
+      transition: filter var(--transition), transform var(--transition);
+    }
+    .team-card:hover .team-photo img { filter: grayscale(0%); transform: scale(1.04); }
+    .team-info {
+      padding: 1.2rem;
+    }
+    .team-name {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+    .team-role {
+      font-size: 0.78rem;
+      color: var(--accent);
+      margin-top: 0.2rem;
+      font-family: var(--font-mono);
+    }
+ 
+    /* ===== OPPORTUNITIES ===== */
+    .opportunities {
+      padding: 8rem 0;
+    }
+    .opp-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+    .opp-header p {
+      color: rgba(248,250,252,0.55);
+      max-width: 500px;
+      margin: 1rem auto 0;
+      font-weight: 300;
+    }
+    .opp-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .opp-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      background: var(--surface);
+      position: relative;
+      overflow: hidden;
+      transition: border-color var(--transition), transform var(--transition);
+    }
+    .opp-card:hover { border-color: rgba(34,197,94,0.4); transform: translateY(-4px); }
+    .opp-num {
+      font-family: var(--font-display);
+      font-size: 4rem;
+      font-weight: 900;
+      color: rgba(34,197,94,0.08);
+      position: absolute;
+      top: 1rem; right: 1.5rem;
+      line-height: 1;
+      pointer-events: none;
+    }
+    .opp-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+    }
+    .opp-card p {
+      color: rgba(248,250,252,0.55);
+      font-size: 0.9rem;
+      line-height: 1.65;
+      margin-bottom: 2rem;
+    }
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--accent);
+      font-family: var(--font-mono);
+      letter-spacing: 0.04em;
+      transition: gap var(--transition);
+    }
+    .btn-ghost:hover { gap: 0.9rem; }
+ 
+    /* ===== FOOTER ===== */
+    .footer {
+      background: var(--deep);
+      border-top: 1px solid var(--line);
+    }
+    .footer-cta {
+      padding: 6rem 0;
+      text-align: center;
+      background:
+        radial-gradient(ellipse 60% 80% at 50% 100%, rgba(34,197,94,0.07) 0%, transparent 70%);
+    }
+    .footer-cta h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+    .footer-cta p {
+      color: rgba(248,250,252,0.5);
+      margin-bottom: 2.5rem;
+      font-weight: 300;
+    }
+    .footer-bottom {
+      border-top: 1px solid var(--line);
+      padding: 1.8rem 0;
+    }
+    .footer-bottom .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-bottom p {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+    .footer-links {
+      display: flex;
+      gap: 1.8rem;
+    }
+    .footer-links a {
+      font-size: 0.82rem;
+      color: var(--muted);
+      transition: color var(--transition);
+    }
+    .footer-links a:hover { color: var(--accent); }
+ 
+    /* ===== ANIMATIONS ===== */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.in-view {
+      opacity: 1;
+      transform: none;
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+ 
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      .research-grid { grid-template-columns: 1fr; }
+      .research-header { grid-template-columns: 1fr; }
+      .impact-inner { grid-template-columns: 1fr; }
+      .team-grid { grid-template-columns: repeat(2, 1fr); }
+      .opp-grid { grid-template-columns: 1fr; }
+      .pub-item { grid-template-columns: 60px 1fr; }
+      .pub-arrow { display: none; }
+      .nav-menu { display: none; }
+    }
+  </style>
 </head>
 <body>
-
-    <!-- ==================
-         Navigation Bar (Simplified)
-         ================== -->
-    <nav class="navbar">
-        <div class="container">
-            <a href="#" class="nav-logo">GIDD Unit</a>
-            <ul class="nav-menu">
-                <li><a href="#">About</a></li>
-                <li><a href="#">Research</a></li>
-                <li><a href="#">Publications</a></li>
-                <li><a href="#">Team</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
+ 
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a href="#" class="nav-logo">GIDD<span> Unit</span></a>
+      <ul class="nav-menu">
+        <li><a href="#research">Research</a></li>
+        <li><a href="#publications">Publications</a></li>
+        <li><a href="#team">Team</a></li>
+        <li><a href="#opportunities">Join Us</a></li>
+        <li><a href="#contact" class="nav-cta">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+ 
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-img-wrap">
+      <img src="https://images.unsplash.com/photo-1576086213369-97a306d36557?w=1600&q=80&fit=crop" alt="Laboratory research" />
+    </div>
+    <div class="hero-content container">
+      <div class="hero-eyebrow">Global Infectious Disease Dynamics Unit</div>
+      <h1>Mapping <em>Disease Dynamics,</em><br>Driving Public Health Policy.</h1>
+      <p class="hero-sub">We integrate seroepidemiology, biomarker analysis, and data science to deliver actionable insights for global health emergencies and disease prevention.</p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn btn-primary">Collaborate With Us →</a>
+        <a href="#research" class="btn btn-outline">Explore Our Research</a>
+      </div>
+    </div>
+    <div class="scroll-hint">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+ 
+  <!-- TRUST BAR -->
+  <section class="trust-bar">
+    <div class="container">
+      <p class="trust-label">Partners & Funders</p>
+      <div class="trust-logos">
+        <span>WHO</span>
+        <span>NIH</span>
+        <span>Wellcome Trust</span>
+        <span>Gavi</span>
+        <span>Gates Foundation</span>
+        <span>CEPI</span>
+      </div>
+      <div class="trust-metrics">
+        <div class="metric">
+          <div class="metric-num">150+</div>
+          <div class="metric-label">Publications</div>
         </div>
-    </nav>
-
-    <main>
-        <!-- ==================
-             Hero Section
-             ================== -->
-        <section class="hero-section">
-            <div class="container">
-                <h1>Mapping Disease Dynamics, Driving Public Health Policy.</h1>
-                <p class="subheadline">Our lab integrates seroepidemiology, biomarker analysis, and data science to provide actionable insights for global health emergencies and disease prevention.</p>
-                <div class="cta-buttons">
-                    <a href="#" class="btn btn-primary">Collaborate With Us</a>
-                    <a href="#" class="btn btn-secondary">Explore Our Research</a>
-                </div>
-            </div>
-        </section>
-
-        <!-- ==================
-             Trust Signals Bar
-             ================== -->
-        <section class="trust-signals">
-            <div class="container">
-                <h6>Trusted by Global Health Leaders</h6>
-                <div class="logos">
-                    <span>WHO</span>
-                    <span>NIH</span>
-                    <span>Wellcome Trust</span>
-                    <span>Gavi</span>
-                    <span>University Partner</span>
-                </div>
-                 <div class="metrics">
-                    <div class="metric-item">
-                        <span class="number">150+</span>
-                        <span class="label">Publications</span>
-                    </div>
-                     <div class="metric-item">
-                        <span class="number">30+</span>
-                        <span class="label">Countries</span>
-                    </div>
-                     <div class="metric-item">
-                        <span class="number">500k+</span>
-                        <span class="label">Samples Analyzed</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ==================
-             Research Highlights
-             ================== -->
-        <section class="research-highlights">
-            <div class="container">
-                <h2>Our Interdisciplinary Approach</h2>
-                <p>We bridge the gap between fieldwork, laboratory science, and computational analysis.</p>
-                <div class="grid-3">
-                    <div class="card">
-                        <h3>Sero-surveillance & Epidemiology</h3>
-                        <p>We design and deploy large-scale studies to measure population immunity and track disease transmission.</p>
-                        <a href="#">Learn More &rarr;</a>
-                    </div>
-                    <div class="card">
-                        <h3>Advanced Biomarker Analysis</h3>
-                        <p>We identify and validate novel biomarkers to predict disease severity, vaccine response, and infection history.</p>
-                        <a href="#">Learn More &rarr;</a>
-                    </div>
-                    <div class="card">
-                        <h3>Data Science & Modeling</h3>
-                        <p>We develop predictive models and data visualization tools to inform public health strategy and resource allocation.</p>
-                        <a href="#">Learn More &rarr;</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ==================
-             Impact Section
-             ================== -->
-        <section class="impact-section">
-            <div class="container split-layout">
-                <div class="impact-text">
-                    <h2>Translating Research into Real-World Protection</h2>
-                    <p>Our work doesn't end in the lab. We partner with ministries of health and global organizations to translate our findings into tangible policy, outbreak response protocols, and stronger health systems. From pandemic preparedness to routine disease surveillance, our goal is saving lives.</p>
-                </div>
-                <div class="impact-visual">
-                    <!-- This would be an impactful image -->
-                </div>
-            </div>
-        </section>
-
-        <!-- ==================
-             Opportunities Section
-             ================== -->
-        <section class="opportunities-section">
-            <div class="container">
-                <h2>Join Our Team. Shape the Future of Global Health.</h2>
-                <div class="grid-3">
-                    <div class="card opportunity-card">
-                        <h3>Graduate Students</h3>
-                        <p>Seeking PhD candidates in immunology and epidemiology.</p>
-                        <a href="#" class="btn btn-tertiary">View Openings</a>
-                    </div>
-                    <div class="card opportunity-card">
-                        <h3>Postdoctoral Fellows</h3>
-                        <p>Openings for computational biologists and lab scientists.</p>
-                        <a href="#" class="btn btn-tertiary">Learn More</a>
-                    </div>
-                    <div class="card opportunity-card">
-                        <h3>Collaborators</h3>
-                        <p>We are actively seeking partners for new research frontiers.</p>
-                        <a href="#" class="btn btn-tertiary">Propose a Project</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- ==================
-         Final CTA & Footer
-         ================== -->
-    <footer class="footer">
-        <div class="container">
-             <h2>Have a question or a project in mind?</h2>
-             <p>Let's connect. We are always open to new ideas and partnerships.</p>
-             <a href="#" class="btn btn-primary">Get In Touch</a>
-             <div class="footer-bottom">
-                <p>&copy; 2024 Global Infectious Disease Dynamics Unit. All rights reserved.</p>
-             </div>
+        <div class="metric">
+          <div class="metric-num">30+</div>
+          <div class="metric-label">Countries</div>
         </div>
-    </footer>
-
+        <div class="metric">
+          <div class="metric-num">500k+</div>
+          <div class="metric-label">Samples Analyzed</div>
+        </div>
+        <div class="metric">
+          <div class="metric-num">18</div>
+          <div class="metric-label">Years Active</div>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- RESEARCH -->
+  <section class="research" id="research">
+    <div class="container">
+      <div class="research-header reveal">
+        <div>
+          <p class="section-eyebrow">Our Approach</p>
+          <h2>An Interdisciplinary<br>Scientific Lens</h2>
+        </div>
+        <p>We bridge the gap between fieldwork, laboratory science, and computational analysis — producing insights no single discipline could reach alone.</p>
+      </div>
+      <div class="research-grid">
+        <div class="research-card reveal reveal-delay-1">
+          <div class="card-icon">🔬</div>
+          <h3>Sero-surveillance & Epidemiology</h3>
+          <p>We design and deploy large-scale population studies to measure immunity landscapes and track disease transmission dynamics across communities.</p>
+          <a href="#" class="card-link">Learn more →</a>
+        </div>
+        <div class="research-card reveal reveal-delay-2">
+          <div class="card-icon">🧬</div>
+          <h3>Advanced Biomarker Analysis</h3>
+          <p>We identify and validate novel biomarkers that predict disease severity, vaccine response, and infection history — enabling precision public health.</p>
+          <a href="#" class="card-link">Learn more →</a>
+        </div>
+        <div class="research-card reveal reveal-delay-3">
+          <div class="card-icon">📊</div>
+          <h3>Data Science & Modeling</h3>
+          <p>We build predictive models and visualization tools to guide public health strategy, resource allocation, and outbreak preparedness planning.</p>
+          <a href="#" class="card-link">Learn more →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- IMPACT -->
+  <section class="impact">
+    <div class="container">
+      <div class="impact-inner">
+        <div class="impact-text reveal">
+          <p class="section-eyebrow">Real-World Impact</p>
+          <h2>Translating Research into Real-World Protection</h2>
+          <p>Our work doesn't end in the lab. We partner with ministries of health and global organizations to translate findings into tangible policy, outbreak response protocols, and stronger health systems.</p>
+          <div class="impact-features">
+            <div class="impact-feat"><div class="feat-dot"></div>Pandemic preparedness frameworks adopted in 12+ countries</div>
+            <div class="impact-feat"><div class="feat-dot"></div>Routine disease surveillance programs established</div>
+            <div class="impact-feat"><div class="feat-dot"></div>Vaccine rollout strategies informed by our seroprevalence data</div>
+            <div class="impact-feat"><div class="feat-dot"></div>Real-time outbreak dashboards deployed for health ministries</div>
+          </div>
+          <a href="#" class="btn btn-primary">Read Our Case Studies →</a>
+        </div>
+        <div class="impact-visual reveal reveal-delay-2">
+          <img src="https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=800&q=80&fit=crop" alt="Lab scientist at work" />
+          <div class="impact-badge">
+            <strong>12+</strong>
+            <span>Countries with active policy impact</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- PUBLICATIONS -->
+  <section class="publications" id="publications">
+    <div class="container">
+      <div class="pub-header reveal">
+        <div>
+          <p class="section-eyebrow">Selected Publications</p>
+          <h2>Peer-Reviewed Science,<br>Open to the World</h2>
+        </div>
+        <a href="#" class="btn btn-outline">View All Publications</a>
+      </div>
+      <div class="pub-list reveal">
+        <div class="pub-item">
+          <span class="pub-year">2024</span>
+          <div>
+            <div class="pub-title">Population-level SARS-CoV-2 seroprevalence and immunity trajectories across sub-Saharan Africa</div>
+            <span class="pub-journal">Nature Medicine</span>
+          </div>
+          <span class="pub-arrow">→</span>
+        </div>
+        <div class="pub-item">
+          <span class="pub-year">2023</span>
+          <div>
+            <div class="pub-title">Multiplex serology reveals unrecognized arbovirus exposures in West African populations</div>
+            <span class="pub-journal">The Lancet Infectious Diseases</span>
+          </div>
+          <span class="pub-arrow">→</span>
+        </div>
+        <div class="pub-item">
+          <span class="pub-year">2023</span>
+          <div>
+            <div class="pub-title">Biomarker signatures predicting severe malaria outcomes in children under five</div>
+            <span class="pub-journal">PLOS Medicine</span>
+          </div>
+          <span class="pub-arrow">→</span>
+        </div>
+        <div class="pub-item">
+          <span class="pub-year">2022</span>
+          <div>
+            <div class="pub-title">Data-driven frameworks for vaccine equity: lessons from COVID-19 rollout modelling</div>
+            <span class="pub-journal">BMJ Global Health</span>
+          </div>
+          <span class="pub-arrow">→</span>
+        </div>
+        <div class="pub-item">
+          <span class="pub-year">2022</span>
+          <div>
+            <div class="pub-title">Longitudinal antibody dynamics following endemic coronavirus infection in a cohort study</div>
+            <span class="pub-journal">eLife</span>
+          </div>
+          <span class="pub-arrow">→</span>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- TEAM -->
+  <section class="team" id="team">
+    <div class="container">
+      <div class="team-header reveal">
+        <p class="section-eyebrow">Our People</p>
+        <h2>The Minds Behind the Mission</h2>
+        <p>A multidisciplinary team of epidemiologists, immunologists, data scientists, and field researchers united by a shared mission.</p>
+      </div>
+      <div class="team-grid">
+        <div class="team-card reveal reveal-delay-1">
+          <div class="team-photo">
+            <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&q=80&fit=crop&crop=face" alt="Principal Investigator" />
+          </div>
+          <div class="team-info">
+            <div class="team-name">Prof. Ama Asante</div>
+            <div class="team-role">Principal Investigator</div>
+          </div>
+        </div>
+        <div class="team-card reveal reveal-delay-2">
+          <div class="team-photo">
+            <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&q=80&fit=crop&crop=face" alt="Senior Researcher" />
+          </div>
+          <div class="team-info">
+            <div class="team-name">Dr. Kofi Mensah</div>
+            <div class="team-role">Senior Epidemiologist</div>
+          </div>
+        </div>
+        <div class="team-card reveal reveal-delay-3">
+          <div class="team-photo">
+            <img src="https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=400&q=80&fit=crop&crop=face" alt="Biomarker Lead" />
+          </div>
+          <div class="team-info">
+            <div class="team-name">Dr. Abena Owusu</div>
+            <div class="team-role">Biomarker Lead</div>
+          </div>
+        </div>
+        <div class="team-card reveal">
+          <div class="team-photo">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80&fit=crop&crop=face" alt="Data Scientist" />
+          </div>
+          <div class="team-info">
+            <div class="team-name">Kwame Boateng</div>
+            <div class="team-role">Data Science Lead</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- OPPORTUNITIES -->
+  <section class="opportunities" id="opportunities">
+    <div class="container">
+      <div class="opp-header reveal">
+        <p class="section-eyebrow">Join The Lab</p>
+        <h2>Shape the Future of Global Health</h2>
+        <p>We are always looking for driven, curious scientists to grow our team.</p>
+      </div>
+      <div class="opp-grid">
+        <div class="opp-card reveal reveal-delay-1">
+          <div class="opp-num">01</div>
+          <h3>Graduate Students</h3>
+          <p>Seeking PhD candidates in immunology, epidemiology, and computational biology. Strong quantitative background preferred.</p>
+          <a href="#" class="btn-ghost">View Openings →</a>
+        </div>
+        <div class="opp-card reveal reveal-delay-2">
+          <div class="opp-num">02</div>
+          <h3>Postdoctoral Fellows</h3>
+          <p>Openings for computational biologists and bench scientists with experience in high-throughput assays or infectious disease modeling.</p>
+          <a href="#" class="btn-ghost">Learn More →</a>
+        </div>
+        <div class="opp-card reveal reveal-delay-3">
+          <div class="opp-num">03</div>
+          <h3>Collaborators</h3>
+          <p>We actively seek institutional partners, NGOs, and research groups for new frontiers in global health surveillance and response.</p>
+          <a href="#" class="btn-ghost">Propose a Project →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- FOOTER -->
+  <footer class="footer" id="contact">
+    <div class="footer-cta">
+      <div class="container">
+        <p class="section-eyebrow">Get In Touch</p>
+        <h2>Have a question or a<br>project in mind?</h2>
+        <p>We are always open to new ideas, partnerships, and collaborations.</p>
+        <a href="mailto:gidd@research.edu" class="btn btn-primary">Send Us a Message →</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <p>© 2025 Global Infectious Disease Dynamics Unit. All rights reserved.</p>
+        <div class="footer-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Accessibility</a>
+          <a href="#">PubMed</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+ 
+  <script>
+    // Navbar scroll effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 40);
+    });
+ 
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in-view');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => observer.observe(el));
+ 
+    // Metric counter animation
+    const metricEls = document.querySelectorAll('.metric-num');
+    const metricObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        const el = e.target;
+        const target = el.textContent;
+        const num = parseFloat(target.replace(/[^0-9.]/g, ''));
+        const suffix = target.replace(/[0-9.]/g, '');
+        let start = 0;
+        const duration = 1600;
+        const step = (timestamp) => {
+          if (!start) start = timestamp;
+          const progress = Math.min((timestamp - start) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          el.textContent = (num < 10 ? Math.round(eased * num) : Math.round(eased * num)) + suffix;
+          if (progress < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+        metricObserver.unobserve(el);
+      });
+    }, { threshold: 0.5 });
+    metricEls.forEach(el => metricObserver.observe(el));
+  </script>
 </body>
 </html>
